@@ -42,7 +42,7 @@ const Checkout = ({ cart }) => {
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
-
+  // console.log("backStep: ", backStep);
   const next = (data) => {
     setShippingData(data);
     nextStep();
@@ -54,7 +54,11 @@ const Checkout = ({ cart }) => {
     activeStep === 0 ? (
       <AddressForm checkoutToken={checkoutToken} next={next} />
     ) : (
-      <PaymentForm shippingData={shippingData} />
+      <PaymentForm
+        shippingData={shippingData}
+        checkoutToken={checkoutToken}
+        backStep={backStep}
+      />
     );
 
   return (

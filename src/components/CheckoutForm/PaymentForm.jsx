@@ -6,27 +6,35 @@ import {
   ElementsConsumer,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+
 import Review from "./Review";
 
 const stripePromise = loadStripe(
   "pk_test_51HygAGJorkHEA4pQgwoLPjtAEepgD1n2gKaeQogM3cFTSQCuOQ9ER7NjrBsCUu4k3y99NFUdHzECLGiustBMrCdq00OGXgiS5k"
 );
 
-const PaymentForm = ({ checkoutToken, backStep, shippingData }) => {
+console.log(process.env);
+const PaymentForm = ({
+  checkoutToken,
+  nextStep,
+  backStep,
+  shippingData,
+  onCaptureCheckout,
+}) => {
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;
 
-    const CardElement = elements.getElement(CardElement);
+    const cardElement = elements.getElement(CardElement);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: CardElement,
+      card: cardElement,
     });
 
     if (error) {
-      console.log(error);
+      console.log("[error]", error);
     } else {
       const orderData = {
         line_items: checkoutToken.live.line_items,
@@ -36,14 +44,14 @@ const PaymentForm = ({ checkoutToken, backStep, shippingData }) => {
           email: shippingData.email,
         },
         shipping: {
-          name: "Primary",
+          name: "International",
           street: shippingData.address1,
           town_city: shippingData.city,
           county_state: shippingData.shippingSubdivision,
           postal_zip_code: shippingData.zip,
           country: shippingData.shippingCountry,
         },
-        fullfillment: { shipping_method: shippingData.shippingOption },
+        fulfillment: { shipping_method: shippingData.shippingOption },
         payment: {
           gateway: "stripe",
           stripe: {
@@ -51,38 +59,28 @@ const PaymentForm = ({ checkoutToken, backStep, shippingData }) => {
           },
         },
       };
+
+      console.log("orderData: ", orderData);
+
+      onCaptureCheckout(checkoutToken.id, orderData);
+
+      nextStep();
     }
   };
+
   return (
     <>
       <Review checkoutToken={checkoutToken} />
       <Divider />
       <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
-        {" "}
-        Payment Method
+        Payment method
       </Typography>
       <Elements stripe={stripePromise}>
         <ElementsConsumer>
           {({ elements, stripe }) => (
             <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-              <CardElement
-                options={{
-                  style: {
-                    base: {
-                      fontSize: "16px",
-                      color: "#424770",
-                      "::placeholder": {
-                        color: "#aab7c4",
-                      },
-                    },
-                    invalid: {
-                      color: "#9e2146",
-                    },
-                  },
-                }}
-              />
-              <br />
-              <br />
+              <CardElement />
+              <br /> <br />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Button variant="outlined" onClick={backStep}>
                   Back

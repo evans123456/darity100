@@ -9,6 +9,7 @@ const FormInput = ({ name, label }) => {
       <Controller
         as={TextField}
         control={control}
+        defaultValue=""
         fullWidth
         name={name}
         label={label}

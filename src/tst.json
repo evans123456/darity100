@@ -1,0 +1,55 @@
+{
+    "line_items":{
+       "item_7RyWOwmK5nEa2V":{
+          "quantity":1,
+          "variants":{
+             "vrnt_p6dP5g0M4ln7kA":"optn_DeN1ql93doz3ym"
+          }
+       }
+    },
+    "discount_code":"20off",
+    "extrafields":{
+       "extr_Kvg9l6zvnl1bB7":"415-111-2222",
+       "extr_bWZ3l8zLNokpEQ":"google.com"
+    },
+    "customer":{
+       "id":"cstmr_7RyWOwmK5nEa2V",
+       "firstname":"John",
+       "lastname":"Doe",
+       "email":"john.doe@example.com"
+    },
+    "shipping":{
+       "name":"John Doe",
+       "street":"123 Fake St",
+       "town_city":"San Francisco",
+       "county_state":"California",
+       "postal_zip_code":"94103",
+       "country":"US"
+    },
+    "fulfillment":{
+       "shipping_method":"ship_7RyWOwmK5nEa2V"
+    },
+    "billing":{
+       "name":"John Doe",
+       "street":"234 Fake St",
+       "town_city":"San Francisco",
+       "county_state":"California",
+       "postal_zip_code":"94103",
+       "country":"US"
+    },
+    "payment":{
+       "gateway":"stripe",
+       "card":{
+          "number":"4242 4242 4242 4242",
+          "expires":"11\/19",
+          "cvc":123,
+          "postal_zip_code":"94107",
+          "token":"irh98298g49",
+          "nonce":293074902374234
+       },
+       "razorpay":{
+          "payment_id":"839h8d89wg87r3cz3trbis8"
+       }
+    },
+    "pay_what_you_want":"149.99"
+ }

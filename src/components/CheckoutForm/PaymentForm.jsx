@@ -13,7 +13,6 @@ const stripePromise = loadStripe(
   "pk_test_51HygAGJorkHEA4pQgwoLPjtAEepgD1n2gKaeQogM3cFTSQCuOQ9ER7NjrBsCUu4k3y99NFUdHzECLGiustBMrCdq00OGXgiS5k"
 );
 
-console.log(process.env);
 const PaymentForm = ({
   checkoutToken,
   nextStep,
@@ -36,6 +35,49 @@ const PaymentForm = ({
     if (error) {
       console.log("[error]", error);
     } else {
+      const fakeData = {
+        line_items: {
+          // Key is the line item ID for our test product
+          item_GNqKE50NwdgBLV: {
+            quantity: 1,
+          },
+        },
+        customer: {
+          firstname: "John",
+          lastname: "Doe",
+          email: "john.doe@example.com",
+        },
+        shipping: {
+          name: "International",
+          street: "123 Fake St",
+          town_city: "San Francisco",
+          county_state: "CA",
+          postal_zip_code: "94103",
+          country: "US",
+        },
+        fulfillment: {
+          // The shipping method ID for "USPS Ground" (for example)
+          // You can use commerce.checkout.getShippingOptions() to get a list
+          shipping_method: "ship_L1vOoZ02alRa8Z",
+        },
+        payment: {
+          // Test Gateway is enabled by default, and is used when you submit orders with
+          // your sandbox API key
+          gateway: "test_gateway",
+          card: {
+            number: "4242 4242 4242 4242",
+            expiry_month: "01",
+            expiry_year: "2023",
+            cvc: "123",
+            postal_zip_code: "94103",
+          },
+        },
+      };
+      console.log(
+        "checkoutToken.live.line_items: ",
+        checkoutToken.live.line_items
+      ); //convert array to object
+      console.log("shippingData.shippingOption: ", shippingData.shippingOption);
       const orderData = {
         line_items: checkoutToken.live.line_items,
         customer: {
@@ -53,16 +95,21 @@ const PaymentForm = ({
         },
         fulfillment: { shipping_method: shippingData.shippingOption },
         payment: {
-          gateway: "stripe",
-          stripe: {
-            payment_method_id: paymentMethod.id,
+          gateway: "test_gateway",
+          card: {
+            number: "4242 4242 4242 4242",
+            expiry_month: "01",
+            expiry_year: "2023",
+            cvc: "123",
+            postal_zip_code: "94103",
           },
         },
       };
 
-      console.log("orderData: ", orderData);
+      console.log("orderData", orderData);
+      console.log("fakeData", fakeData);
 
-      onCaptureCheckout(checkoutToken.id, orderData);
+      onCaptureCheckout(checkoutToken.id, fakeData);
 
       nextStep();
     }
@@ -101,5 +148,4 @@ const PaymentForm = ({
     </>
   );
 };
-
 export default PaymentForm;

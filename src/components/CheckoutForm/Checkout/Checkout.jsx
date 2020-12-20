@@ -34,7 +34,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
         // console.log("Token: ", token);
         setCheckoutToken(token);
       } catch (error) {
-        history.pushState("/");
+        window.location.href = "/";
       }
     };
     generateToken();

@@ -37,7 +37,6 @@ const PaymentForm = ({
     } else {
       const fakeData = {
         line_items: {
-          // Key is the line item ID for our test product
           item_GNqKE50NwdgBLV: {
             quantity: 1,
           },
@@ -45,16 +44,25 @@ const PaymentForm = ({
         customer: {
           firstname: "John",
           lastname: "Doe",
-          email: "john.doe@example.com",
+          email: "evansgichuki656@gmail.com",
+        },
+        billing: {
+          name: "the_rest",
+          street: "123 Fake St",
+          town_city: "kikuyu",
+          county_state: "AA",
+          postal_zip_code: "00100",
+          country: "ET",
         },
         shipping: {
-          name: "International",
+          name: "the_rest",
           street: "123 Fake St",
-          town_city: "San Francisco",
-          county_state: "CA",
-          postal_zip_code: "94103",
-          country: "US",
+          town_city: "kikuyu",
+          county_state: "AA",
+          postal_zip_code: "00100",
+          country: "ET",
         },
+
         fulfillment: {
           // The shipping method ID for "USPS Ground" (for example)
           // You can use commerce.checkout.getShippingOptions() to get a list
@@ -63,21 +71,19 @@ const PaymentForm = ({
         payment: {
           // Test Gateway is enabled by default, and is used when you submit orders with
           // your sandbox API key
-          gateway: "test_gateway",
+          gateway: "stripe",
           card: {
-            number: "4242 4242 4242 4242",
-            expiry_month: "01",
-            expiry_year: "2023",
-            cvc: "123",
-            postal_zip_code: "94103",
+            token: "irh98298g49",
           },
         },
+        pay_what_you_want: 450.0,
       };
       console.log(
         "checkoutToken.live.line_items: ",
         checkoutToken.live.line_items
       ); //convert array to object
-      console.log("shippingData.shippingOption: ", shippingData.shippingOption);
+      console.log("shippingData.shippingOption: ", shippingData);
+
       const orderData = {
         line_items: checkoutToken.live.line_items,
         customer: {
@@ -98,16 +104,16 @@ const PaymentForm = ({
           gateway: "test_gateway",
           card: {
             number: "4242 4242 4242 4242",
-            expiry_month: "01",
-            expiry_year: "2023",
-            cvc: "123",
-            postal_zip_code: "94103",
+            expiry_month: "04",
+            expiry_year: "2024",
+            cvc: "242",
+            postal_zip_code: "42424",
           },
         },
       };
 
       console.log("orderData", orderData);
-      console.log("fakeData", fakeData);
+      console.log("fakeData- submitted", fakeData);
 
       onCaptureCheckout(checkoutToken.id, fakeData);
 

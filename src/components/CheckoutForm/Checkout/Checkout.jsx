@@ -51,7 +51,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
     setShippingData(data);
     nextStep();
   };
-  activeStep = 1;
+  // activeStep = 1;
 
   let Confirmation = () =>
     order.customer ? (

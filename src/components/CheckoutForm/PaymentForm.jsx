@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Button, Divider } from "@material-ui/core";
 import {
   Elements,
@@ -32,6 +32,8 @@ const PaymentForm = ({
       card: cardElement,
     });
 
+    const token = await stripe.createToken(cardElement);
+    if (!token) return "Loading...";
     if (error) {
       console.log("[error]", error);
     } else {
@@ -73,17 +75,17 @@ const PaymentForm = ({
           // your sandbox API key
           gateway: "stripe",
           card: {
-            token: "irh98298g49",
+            token: token["token"]["id"],
           },
         },
         pay_what_you_want: 450.0,
       };
-      console.log(
-        "checkoutToken.live.line_items: ",
-        checkoutToken.live.line_items
-      ); //convert array to object
-      console.log("shippingData.shippingOption: ", shippingData);
-
+      // console.log(
+      //   "checkoutToken.live.line_items: ",
+      //   checkoutToken.live.line_items
+      // ); //convert array to object
+      // console.log("shippingData.shippingOption: ", shippingData);
+      // console.log("stripePromise: ", stripePromise);
       const orderData = {
         line_items: checkoutToken.live.line_items,
         customer: {
@@ -111,6 +113,9 @@ const PaymentForm = ({
           },
         },
       };
+
+      console.log("The new token: ", token);
+      console.log("token: ", token["token"]["id"]);
 
       console.log("orderData", orderData);
       console.log("fakeData- submitted", fakeData);

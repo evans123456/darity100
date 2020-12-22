@@ -57,7 +57,7 @@ const App = () => {
       refreshCart();
     } catch (error) {
       console.log("The error: ", error);
-      setErrorMessage(error.data.error.message);
+      // setErrorMessage(error.data.error.message);
     }
   };
 

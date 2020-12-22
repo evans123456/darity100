@@ -31,22 +31,35 @@ const PaymentForm = ({
       type: "card",
       card: cardElement,
     });
+    checkoutToken.live.line_items.map(() => {});
+
+    var line_items = {};
+
+    for (var i = 0; i < checkoutToken.live.line_items.length; i++) {
+      // console.log("lineitem: ", checkoutToken.live.line_items[i]);
+      line_items[checkoutToken.live.line_items[i]["id"]] = {
+        quantity: checkoutToken.live.line_items[i]["quantity"],
+      };
+    }
+
+    // console.log("LINE_ITEMS: ", line_items);
 
     const token = await stripe.createToken(cardElement);
     if (!token) return "Loading...";
     if (error) {
       console.log("[error]", error);
     } else {
+      // {
+      //   item_7RyWOwmK5nEa2V: {
+      //     quantity: 1,
+      //   },
+      // }
       const fakeData = {
-        line_items: {
-          item_GNqKE50NwdgBLV: {
-            quantity: 1,
-          },
-        },
+        line_items: line_items,
         customer: {
-          firstname: "John",
-          lastname: "Doe",
-          email: "evansgichuki656@gmail.com",
+          firstname: shippingData.firstName,
+          lastname: shippingData.lastName,
+          email: shippingData.email,
         },
         billing: {
           name: "the_rest",
@@ -78,13 +91,9 @@ const PaymentForm = ({
             token: token["token"]["id"],
           },
         },
-        pay_what_you_want: 450.0,
+        pay_what_you_want: "450.0",
       };
-      // console.log(
-      //   "checkoutToken.live.line_items: ",
-      //   checkoutToken.live.line_items
-      // ); //convert array to object
-      // console.log("shippingData.shippingOption: ", shippingData);
+      console.log("shippingData.shippingOption: ", shippingData);
       // console.log("stripePromise: ", stripePromise);
       const orderData = {
         line_items: checkoutToken.live.line_items,

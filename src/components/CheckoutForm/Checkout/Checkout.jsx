@@ -53,6 +53,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
   };
   // activeStep = 1;
 
+  if (!order) return "Loading... ";
   let Confirmation = () =>
     order.customer ? (
       <>

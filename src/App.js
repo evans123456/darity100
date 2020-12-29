@@ -52,12 +52,12 @@ const App = () => {
       const incomingOrder = await commerce.checkout
         .capture(checkoutTokenId, newOrder)
         .then((response) => console.log(response));
-
+      console.log("incomingOrder: ", incomingOrder);
       setOrder(incomingOrder);
       refreshCart();
     } catch (error) {
       console.log("The error: ", error);
-      // setErrorMessage(error.data.error.message);
+      setErrorMessage(error);
     }
   };
 
@@ -88,6 +88,7 @@ const App = () => {
           </Route>
 
           <Route exact path="/checkout">
+            {console.log("The Order: ", order)}
             <Checkout
               cart={cart}
               order={order}

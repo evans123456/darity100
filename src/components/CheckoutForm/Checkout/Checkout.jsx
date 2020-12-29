@@ -42,6 +42,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
 
   // console.log("checkoutToken: ", checkoutToken);
 
+  if (order === undefined) return "Loading... ";
   if (checkoutToken === null) return <div>Loading...</div>;
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -53,11 +54,11 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
   };
   // activeStep = 1;
 
-  if (!order) return "Loading... ";
   let Confirmation = () =>
     order.customer ? (
       <>
         <div>
+          {console.log("order", order)}
           <Typography variant="h5">
             Thank you for your purchase, {order.customer.firstname}{" "}
             {order.customer.lastname}
@@ -80,7 +81,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
     );
   if (error) {
     <>
-      <Typography variant="h2">Error: {error}</Typography>
+      <Typography variant="h5">Error: {error}</Typography>
       <br />
       <Button component={Link} to="/" variant="outlined" type="button">
         Back to Home
@@ -116,6 +117,8 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
               </Step>
             ))}
           </Stepper>
+          {console.log("activeStep: ", activeStep)}
+          {console.log("steps.length: ", steps.length)}
           {activeStep === steps.length ? (
             <Confirmation />
           ) : (

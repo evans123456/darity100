@@ -123,10 +123,10 @@ const PaymentForm = ({
         },
       };
 
-      console.log("The new token: ", token);
-      console.log("token: ", token["token"]["id"]);
+      // console.log("The new token: ", token);
+      // console.log("token: ", token["token"]["id"]);
 
-      console.log("orderData", orderData);
+      // console.log("orderData", orderData);
       console.log("fakeData- submitted", fakeData);
 
       onCaptureCheckout(checkoutToken.id, fakeData);
